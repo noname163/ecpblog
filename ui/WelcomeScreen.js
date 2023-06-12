@@ -2,7 +2,7 @@ import React from 'react';
 import AppScreen from '../components/AppScreen';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import AppButton from '../components/AppButton';
-
+import styleConfig from '../config/styles';
 function WelcomeScreen(props) {
     return (
         <AppScreen style={styles.container}>
@@ -10,11 +10,13 @@ function WelcomeScreen(props) {
                 style={styles.background}
                 resizeMode='cover'
                 source={require("../assets/images/background2.jpg")}>
-                    {/* <Image source={require("../assets/images/logo.png")}/> */}
-                <Text style={styles.text}>Welcome To Exchange Blog</Text>
+                <Image style={styleConfig.logo} source={require("../assets/images/logo.png")} />
+                {/* <Image style={styles.wellcomeImage} source={require("../assets/images/wellcome.png")} /> */}
+                <Text style={styles.text}>Welcome To</Text>
+                <Text style={styles.text}>Exchange Blog</Text>
                 <View style={styles.buttons}>
                     <AppButton title={"login"} />
-                    <AppButton title={"register"} color='secondary'/>
+                    <AppButton title={"register"} color='secondary' />
                 </View>
             </ImageBackground>
         </AppScreen>
@@ -24,25 +26,28 @@ function WelcomeScreen(props) {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        width:'100%',
+        width: '100%',
         justifyContent: 'center',
-        alignItems:'center',
-        backgroundColor:'blue'
+        alignItems: 'center',
+        backgroundColor: 'blue'
     },
     container: {
         flex: 1
     },
     text: {
-        color: 'black',
-        fontSize: 42,
-        lineHeight: 84,
+        color: 'gray',
+        fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    buttons:{
-        marginTop:50,
-        padding:20,
-        width:'90%'
+    buttons: {
+        marginTop: 50,
+        padding: 20,
+        width: '90%'
+    },
+    wellcomeImage: {
+        width:'50%',
+        height:'30%'
     }
 })
 export default WelcomeScreen;

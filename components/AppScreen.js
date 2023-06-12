@@ -8,10 +8,8 @@ function AppScreen({ children }) {
                 style={styles.background}
                 resizeMode='cover'
                 source={require("../assets/images/background2.jpg")}>
-                {/* <Image source={require("../assets/images/logo.png")}/> */}
                 {children}
             </ImageBackground>
-
         </SafeAreaView>
     );
 }
