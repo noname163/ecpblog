@@ -5,13 +5,13 @@ import AppScreen from '../components/AppScreen';
 import AppTextInput from '../components/AppTextInput';
 import styles from '../config/styles';
 
-function LoginScreen(props) {
+function LoginScreen({navigation}) {
     return (
         <AppScreen>
             <Image style={styles.logo} source={require("../assets/images/logo.png")} />
             <AppTextInput icon={'email'} placeholder ={"Email"}/>
             <AppTextInput icon={'account-lock'} secureTextEntry placeholder ={"Password"}/>
-            <AppButton title={"login"}/>
+            <AppButton title={"login"} onPress={()=>navigation.navigate("Home")}/>
         </AppScreen>
     );
 }

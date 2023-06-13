@@ -25,7 +25,7 @@ const initDataset = [
         subtitle: "Change for everythings"
     }
 ]
-function HomeScreen(props) {
+function HomeScreen({navigation}) {
     const[dataset,setDataset] = useState(initDataset);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -42,7 +42,7 @@ function HomeScreen(props) {
                     <AppCard
                         title={item.title}
                         subtitle={item.subtitle}
-                        onPress={()=> console.log(item)}
+                        onPress={()=> navigation.navigate("Card Detail")}
                         image={item.image} 
                         renderRightActions={()=>
                         <ListItemReport 

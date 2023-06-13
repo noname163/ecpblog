@@ -3,23 +3,25 @@ import AppScreen from '../components/AppScreen';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import AppButton from '../components/AppButton';
 import styleConfig from '../config/styles';
-function WelcomeScreen(props) {
+
+
+function WelcomeScreen({navigation}) {
     return (
         <AppScreen style={styles.container}>
-            <ImageBackground
-                style={styles.background}
-                resizeMode='cover'
-                source={require("../assets/images/background2.jpg")}>
-                <Image style={styleConfig.logo} source={require("../assets/images/logo.png")} />
-                {/* <Image style={styles.wellcomeImage} source={require("../assets/images/wellcome.png")} /> */}
-                <Text style={styles.text}>Welcome To</Text>
-                <Text style={styles.text}>Exchange Blog</Text>
-                <View style={styles.buttons}>
-                    <AppButton title={"login"} />
-                    <AppButton title={"register"} color='secondary' />
-                </View>
-            </ImageBackground>
-        </AppScreen>
+                <ImageBackground
+                    style={styles.background}
+                    resizeMode='cover'
+                    source={require("../assets/images/background2.jpg")}>
+                    <Image style={styleConfig.logo} source={require("../assets/images/logo.png")} />
+                    {/* <Image style={styles.wellcomeImage} source={require("../assets/images/wellcome.png")} /> */}
+                    <Text style={styles.text}>Welcome To</Text>
+                    <Text style={styles.text}>Exchange Blog</Text>
+                    <View style={styles.buttons}>
+                        <AppButton title={"login"} onPress={()=> navigation.navigate("Login")}/>
+                        <AppButton title={"register"} onPress={()=> navigation.navigate("Register")} color='secondary' />
+                    </View>
+                </ImageBackground>
+            </AppScreen>
     );
 }
 
@@ -46,8 +48,8 @@ const styles = StyleSheet.create({
         width: '90%'
     },
     wellcomeImage: {
-        width:'50%',
-        height:'30%'
+        width: '50%',
+        height: '30%'
     }
 })
 export default WelcomeScreen;

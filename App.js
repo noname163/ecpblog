@@ -7,19 +7,25 @@ import AppCard from './components/AppCard';
 import CardDetailScreen from './ui/CardDetailScreen';
 import HomeScreen from './ui/HomeScreen';
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native"
+
+const Stack = createNativeStackNavigator();
+const StackNavigator= () => (
+  <Stack.Navigator>
+        <Stack.Screen name="Wellcome" component={WelcomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Card Detail" component={CardDetailScreen} />
+    </Stack.Navigator>
+)
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <LoginScreen/> */}
-      {/* <RegisterScreen/> */}
-      {/* <WelcomeScreen/> */}
-      {/* <AppCard 
-      title={"Test"}
-      subtitle={"Test"}
-      image={require("./assets/images/background2.jpg")}/> */}
-      {/* <CardDetailScreen/> */}
-      <HomeScreen />
-    </View>
+    <NavigationContainer>
+      <StackNavigator/>
+    </NavigationContainer>
   );
 }
 

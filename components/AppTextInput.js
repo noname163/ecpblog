@@ -16,14 +16,9 @@ const styles = StyleSheet.create({
         backgroundColor: colors.light,
         borderRadius: 25,
         flexDirection: 'row',
-        width: '100%',
+        width: '95%',
         padding: 15,
         marginVertical: 10
-    },
-    textInput: {
-        color: colors.dark,
-        fontSize: 18,
-        fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir"
     },
     icon:{
         marginRight:10,

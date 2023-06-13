@@ -10,6 +10,6 @@ export default {
     logo:{
         width:'40%',
         height:'30%',
-        marginBottom:5
+        marginBottom:5,
     }
 }
