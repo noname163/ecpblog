@@ -5,13 +5,14 @@ import AppText from '../components/AppText';
 import colors from '../config/colors';
 import ListItem from '../components/ListItem';
 
-function CardDetailScreen(props) {
+function CardDetailScreen({route}) {
+    const data = route.params.item;
     return (
         <AppScreen>
-            <Image style={styles.image} source={require("../assets/images/background.jpg")} />
+            <Image style={styles.image} source={data.image} />
             <View style={styles.detailsContainer} >
-                <AppText style={styles.title}>Title</AppText>
-                <AppText style={styles.price}>$ 100</AppText>
+                <AppText style={styles.title}>{data.title}</AppText>
+                <AppText style={styles.price}>{data.subtitle}</AppText>
                 <View style={styles.userContainer}>
                 <ListItem title={"Somthing bad happen"}
                     subtitle={"Notthing bad happen"}

@@ -42,7 +42,7 @@ function HomeScreen({navigation}) {
                     <AppCard
                         title={item.title}
                         subtitle={item.subtitle}
-                        onPress={()=> navigation.navigate("Card Detail")}
+                        onPress={()=> navigation.navigate("Product Detail",{item})}
                         image={item.image} 
                         renderRightActions={()=>
                         <ListItemReport 
