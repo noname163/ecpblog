@@ -3,6 +3,7 @@ import AppScreen from '../components/AppScreen';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import AppButton from '../components/AppButton';
 import styleConfig from '../config/styles';
+import routes from '../navigation/routes';
 
 
 function WelcomeScreen({navigation}) {
@@ -17,8 +18,8 @@ function WelcomeScreen({navigation}) {
                     <Text style={styles.text}>Welcome To</Text>
                     <Text style={styles.text}>Exchange Blog</Text>
                     <View style={styles.buttons}>
-                        <AppButton title={"login"} onPress={()=> navigation.navigate("Login")}/>
-                        <AppButton title={"register"} onPress={()=> navigation.navigate("Register")} color='secondary' />
+                        <AppButton title={"login"} onPress={()=> navigation.navigate(routes.LOGIN_SCREEN)}/>
+                        <AppButton title={"register"} onPress={()=> navigation.navigate(routes.REGISTER_SCREEN)} color='secondary' />
                     </View>
                 </ImageBackground>
             </AppScreen>

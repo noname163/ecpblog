@@ -3,11 +3,11 @@ import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import colors from '../config/colors';
 import { MaterialIcons } from '@expo/vector-icons';
 
-function ListItemReport({onPress}) {
+function ListItemReport({onPress, icon}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={styles.container} >
-            <MaterialIcons name="report" size={25} color={colors.while} />
+            <MaterialIcons name={icon} size={25} color={colors.while} />
         </View>
         </TouchableWithoutFeedback>
     );

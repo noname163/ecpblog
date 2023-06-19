@@ -3,6 +3,7 @@ import AppScreen from '../components/AppScreen';
 import { FlatList, View, StyleSheet } from 'react-native';
 import AppCard from '../components/AppCard';
 import ListItemReport from '../components/ListItemReport';
+import routes from '../navigation/routes';
 
 
 const initDataset = [
@@ -42,10 +43,11 @@ function HomeScreen({navigation}) {
                     <AppCard
                         title={item.title}
                         subtitle={item.subtitle}
-                        onPress={()=> navigation.navigate("Product Detail",{item})}
+                        onPress={()=> navigation.navigate(routes.PRODUCT_DETAIL_SCREEN,{item})}
                         image={item.image} 
                         renderRightActions={()=>
                         <ListItemReport 
+                        icon="report"
                         onPress={()=> handleDelete(item)}/>}/>}
                         refreshing={refreshing}
                         onRefresh={()=>console.log("refresh")}     
