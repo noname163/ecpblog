@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, TextInput, Platform } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import colors from '../config/colors';
-import defaultStyle from '../config/styles';
+import colors from '../../config/colors';
+import defaultStyle from '../../config/styles';
 function AppTextInput({ icon, ...otherProps }) {
     return (
         <View style={styles.container}>

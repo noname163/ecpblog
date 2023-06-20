@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
-import AppCard from './AppCard';
-import AppText from './AppText';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 import { Swipeable } from 'react-native-gesture-handler';
+import AppText from '../text/AppText';
 
 function ListItem({ image, title, subtitle, onPress, renderRightActions }) {
     return (

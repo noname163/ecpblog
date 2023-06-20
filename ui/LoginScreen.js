@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
-import AppButton from '../components/AppButton';
+import { Image } from 'react-native';
 import AppScreen from '../components/AppScreen';
-import AppTextInput from '../components/AppTextInput';
+import AppButton from '../components/button/AppButton';
+import AppTextInput from '../components/text/AppTextInput';
 import styles from '../config/styles';
 import routes from '../navigation/routes';
 

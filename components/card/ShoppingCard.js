@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import AppScreen from './AppScreen';
+import AppScreen from '../AppScreen';
 
 function ShoppingCard(props) {
     return (

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, StyleSheet, FlatList, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import AppImageLibraryInput from './AppImageLibraryInput';
 
 function ListImageInput({ imageUris = [], onRemoveImage, onAddImage }) {
@@ -11,7 +11,6 @@ function ListImageInput({ imageUris = [], onRemoveImage, onAddImage }) {
                     {imageUris.map(uri =>
                         <View style={styles.image} key={uri}>
                             <AppImageLibraryInput
-
                                 imageUri={uri}
                                 onChangeImage={() => onRemoveImage(uri)} />
                         </View>
@@ -25,7 +24,7 @@ function ListImageInput({ imageUris = [], onRemoveImage, onAddImage }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        marginVertical: 5
+        marginVertical: 5,
     },
     image: {
         marginRight: 10

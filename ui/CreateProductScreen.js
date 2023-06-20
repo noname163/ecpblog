@@ -1,38 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import AppScreen from '../components/AppScreen';
-import * as ImagePicker from 'expo-image-picker';
-import AppButton from '../components/AppButton';
-import colors from '../config/colors';
-import AppImageLibraryInput from '../components/AppImageLibraryInput';
-import ListImageInput from '../components/ListImageInput';
+import ListImageInput from '../components/image/ListImageInput';
+import AppForm from '../components/form/AppForm'
+import AppFormImagePicker from './../components/form/AppFormImagePicker';
+import AppFormField from './../components/form/AppFormField';
+import * as Yup from "yup";
+import AppSubmitButton from './../components/button/AppSubmitButton';
+import AppPicker from './../components/AppPicker';
 
-function CreateProductScreen(props) {
-    const [imageUri, setImageUri] = useState("");
-    const [imageUris, setImageUris] = useState([]);
-    const handleAdd = uri => {
-        setImageUris([...imageUris, uri]);
-    }
-    const handleRemove = uri => {
-        setImageUris(imageUris.filter((imageUri) => imageUri !== uri))
+const validationSchema = Yup.object().shape({
+    title: Yup.string().required().min(1).label("Title"),
+    price: Yup.number().required().min(1).max(10000).label("Price"),
+    description: Yup.string().label("Description")
+});
+
+function CreateProductScreen() {
+    const handleSubmit = (values) =>{
+        console.log("submit value ", values)
     }
     return (
         <AppScreen>
-            {/* <AppImageLibraryInput
-                imageUri={imageUri}
-                onChangeImage={setImageUri}
-            /> */}
-            <ListImageInput
-                imageUris={imageUris}
-                onAddImage={handleAdd}
-                onRemoveImage={handleRemove}
-            />
+            <ScrollView style={styles.container} >
+                <View style={{width:"100%", height:"100%"}}>
+                    <AppForm
+                        initialValues={{
+                            images: [],
+                            price: "",
+                            description:""
+                        }}
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => handleSubmit(values)}
+                    >
+                        <AppFormImagePicker name="images" />
+                        <AppFormField maxLength={255} name="title" placeholder="Title" />
+                        <AppFormField
+                            keyboardType="numeric"
+                            maxLength={8}
+                            name="price"
+                            placeholder="Price"
+                        />
+                        <AppFormField
+                            maxLength={255}
+                            multiline
+                            name="description"
+                            numberOfLines={3}
+                            placeholder="Description"
+                        />
+                        <AppSubmitButton title={"Create"} />
+                    </AppForm>
+                </View>
+            </ScrollView>
         </AppScreen>
     );
 }
 
 const styles = StyleSheet.create({
-    // Your styles here
+    container: {
+        height: "100%",
+        width: "100%",
+        marginLeft:30
+    }
 });
 
 export default CreateProductScreen;

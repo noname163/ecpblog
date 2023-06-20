@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
 import AppScreen from '../components/AppScreen';
-import ListItem from '../components/ListItem';
-import ListItemReport from '../components/ListItemReport';
+import ListItem from '../components/list/ListItem';
+import ListItemReport from '../components/list/ListItemReport';
 
 
 const initDataset = [

@@ -1,9 +1,10 @@
 import React from 'react';
 import AppScreen from '../components/AppScreen';
 import { Image, StyleSheet, View } from 'react-native';
-import AppText from '../components/AppText';
 import colors from '../config/colors';
-import ListItem from '../components/ListItem';
+
+import AppText from '../components/text/AppText';
+import ListItem from './../components/list/ListItem';
 
 function CardDetailScreen({route}) {
     const data = route.params.item;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 import { MaterialIcons } from '@expo/vector-icons';
 
 function ListItemReport({onPress, icon}) {

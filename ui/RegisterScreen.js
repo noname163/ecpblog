@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import AppButton from '../components/AppButton';
+import AppButton from '../components/button/AppButton';
 import AppScreen from '../components/AppScreen';
-import AppTextInput from '../components/AppTextInput';
+import AppTextInput from '../components/text/AppTextInput';
 import styles from '../config/styles';
 function RegisterScreen(props) {
     return (

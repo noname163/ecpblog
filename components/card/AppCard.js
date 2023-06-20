@@ -1,9 +1,9 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import colors from '../config/colors';
-import AppText from './AppText';
+import colors from '../../config/colors';
 import { AntDesign } from '@expo/vector-icons';
+import AppText from '../text/AppText';
 
 function AppCard({ title, subtitle, image, onPress, renderRightActions }) {
     return (

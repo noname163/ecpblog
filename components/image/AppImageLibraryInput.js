@@ -4,7 +4,6 @@ import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 function AppImageLibraryInput({ imageUri, onChangeImage }) {
-
     const requestPermission = async () => {
         const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (!granted) {
@@ -34,7 +33,6 @@ function AppImageLibraryInput({ imageUri, onChangeImage }) {
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 quality: 0.5
             });
-
             if (!result.canceled) {
                 onChangeImage(result.assets[0].uri);
             }
@@ -59,12 +57,12 @@ function AppImageLibraryInput({ imageUri, onChangeImage }) {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: "center",
         backgroundColor: "#9BABB8",
         borderRadius: 7,
         height: 110,
         width: 110,
-        justifyContent: "center",
+        justifyContent:"center",
+        alignItems:"center",
         overflow: "hidden"
     },
     image: {
