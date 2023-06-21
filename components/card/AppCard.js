@@ -1,11 +1,12 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
+import { Image, Pressable, StyleSheet, TouchableHighlight, View } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import colors from '../../config/colors';
 import { AntDesign } from '@expo/vector-icons';
 import AppText from '../text/AppText';
+import Favorite from '../icons/Favorite';
 
-function AppCard({ title, subtitle, image, onPress, renderRightActions }) {
+function AppCard({ title, subtitle, image, isFavorite, handleFavorite, onPress, renderRightActions }) {
     return (
         <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
             <View style={styles.card}>
@@ -16,12 +17,9 @@ function AppCard({ title, subtitle, image, onPress, renderRightActions }) {
                             <AppText style={styles.title}>{title}</AppText>
                             <AppText style={styles.subtitle}>{subtitle}</AppText>
                         </View>
-                        <AntDesign
-                            style={styles.heartIcon}
-                            name="hearto"
-                            size={24}
-                            color="black"
-                        />
+                        <Pressable onPress={handleFavorite} style={styles.heartIcon}>
+                            <Favorite isFavorite={isFavorite} />
+                        </Pressable>
                     </View>
                 </Swipeable>
             </View>
@@ -55,8 +53,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     heartIcon: {
-        marginLeft:"auto",
-        marginVertical:15
+        marginLeft: "auto",
+        marginVertical: 15
     },
 });
 

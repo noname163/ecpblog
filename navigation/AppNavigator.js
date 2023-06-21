@@ -1,13 +1,10 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../ui/HomeScreen';
-import CreateProductScreen from './../ui/CreateProductScreen';
-import ShoppingCartListScreen from '../ui/ShoppingCartListScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import CreateProductScreen from './../ui/CreateProductScreen';
 import FeedNavigator from './FeedNavigator';
-import AccountScreen from './../ui/AccountScreen';
-import ShoppingCartNavigator from './ShoppingCartNavigator';
 import NewListingButton from './NewListingButton';
+import ShoppingCartNavigator from './ShoppingCartNavigator';
 import routes from './routes';
 
 const Tab = createBottomTabNavigator();
