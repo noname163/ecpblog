@@ -9,7 +9,7 @@ function ListItem({ image, title, subtitle, onPress, renderRightActions }) {
         <TouchableHighlight onPress={onPress} underlayColor={colors.while}>
             <Swipeable renderRightActions={renderRightActions}>
                 <View style={styles.container}>
-                    <Image style={styles.image} source={image} />
+                    <Image style={styles.image} source={{uri:image}} />
                     <View style={styles.textContainer}>
                         <AppText style={styles.title}>{title}</AppText>
                         <AppText style={styles.subtitle}>{subtitle}</AppText>

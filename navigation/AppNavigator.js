@@ -6,6 +6,7 @@ import FeedNavigator from './FeedNavigator';
 import NewListingButton from './NewListingButton';
 import ShoppingCartNavigator from './ShoppingCartNavigator';
 import routes from './routes';
+import FavoriteScreen from '../ui/FavoriteScreen';
 
 const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
@@ -28,11 +29,11 @@ const AppNavigator = () => (
       })}
     />
     <Tab.Screen
-      name="Shopping Cart"
-      component={ShoppingCartNavigator}
+      name="Favorities"
+      component={FavoriteScreen}
       options={{
         tabBarIcon: () => (
-          <MaterialCommunityIcons name="cart" size={24} color="black" />
+          <MaterialCommunityIcons name="heart" size={33} color="black" />
         ),
       }}
     />

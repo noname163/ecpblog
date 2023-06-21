@@ -1,67 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AppScreen from '../components/AppScreen';
 import routes from '../navigation/routes';
 import AppCard from './../components/card/AppCard';
 import ListItemReport from './../components/list/ListItemReport';
-
-const initDataset = [
-    {
-        id: 1,
-        image: require("../assets/images/background.jpg"),
-        title: "Somthing to exchange 1",
-        subtitle: "Clothing",
-        favorite: false
-    },
-    {
-        id: 2,
-        image: require("../assets/images/background.jpg"),
-        title: "Somthing to exchange 2",
-        subtitle: "Clothing",
-        favorite: false
-    },
-    {
-        id: 3,
-        image: require("../assets/images/background.jpg"),
-        title: "Somthing to exchange 3",
-        subtitle: "Furniture",
-        favorite: false
-    }
-];
-
-const categories = [
-    { label: "All", value: "all" },
-    { label: "Furniture", value: "Furniture" },
-    { label: "Clothing", value: "Clothing" },
-    { label: "Camera", value: "Camera" },
-];
+import AppAsyncStore from '../assets/data/AppAsyncStore';
 
 function HomeScreen({ navigation }) {
-    const [dataset, setDataset] = useState(initDataset);
+    const [filterData, setFilterData] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("all");
 
+    useEffect(() => {
+        retrieveData();
+        storeData();
+    }, []);
+
+    useEffect(() => {
+        handleCategoryPress(selectedCategory);
+    }, [selectedCategory]);
+
+    const storeData = async() => {
+        try {
+            await AppAsyncStore.storeData();
+        } catch (error) {
+            
+        }
+    }
+    const retrieveData = async () => {
+        try {
+            const { itemDataset, categories } = await AppAsyncStore.retrieveData();
+            setFilterData(itemDataset);
+            setCategories(categories);
+            console.log("Item dataset:", itemDataset);
+        } catch (error) {
+            console.log('Error retrieving data:', error);
+        }
+    };
+
     const handleDelete = (data) => {
-        setDataset(dataset.filter((d) => d.id !== data.id));
+        setFilterData((prevData) => prevData.filter((d) => d.id !== data.id));
     };
 
-    const handleFavorite = (data) => {
-        setDataset((prevDataset) =>
-            prevDataset.map((item) =>
-                item.id === data.id ? { ...item, favorite: !item.favorite } : item
-            )
+    const handleFavorite = async (data) => {
+        const updatedData = filterData.map((item) =>
+            item.id === data.id ? { ...item, favorite: !item.favorite } : item
         );
+        data.favorite = !data.favorite;
+        setFilterData(updatedData);
+        await AppAsyncStore.updateDataItem(data);
     };
 
-    const handleCategoryPress = (itemValue) => {
+    const handleCategoryPress = async (itemValue) => {
         setSelectedCategory(itemValue);
-        console.log("Category selected ", itemValue)
+        console.log("Category selected:", itemValue);
+        const { itemDataset } = await AppAsyncStore.retrieveData();
         const filteredData =
             itemValue === "all"
-                ? initDataset // If "All" category is selected, show all data
-                : initDataset.filter((item) => item.subtitle === itemValue);
+                ? itemDataset
+                : itemDataset.filter((item) => item.subtitle === itemValue);
 
-        setDataset(filteredData);
+        setFilterData(filteredData);
     };
 
     const renderCategoryItem = ({ item }) => (
@@ -83,6 +83,20 @@ function HomeScreen({ navigation }) {
         </TouchableOpacity>
     );
 
+    const renderItem = ({ item }) => (
+        <AppCard
+            handleFavorite={() => handleFavorite(item)}
+            isFavorite={item.favorite}
+            title={item.title}
+            subtitle={item.subtitle}
+            onPress={() => navigation.navigate(routes.PRODUCT_DETAIL_SCREEN, { item })}
+            image={item.image}
+            renderRightActions={() => (
+                <ListItemReport icon="report" onPress={() => handleDelete(item)} />
+            )}
+        />
+    );
+
     return (
         <AppScreen>
             <View style={styles.categoriesContainer}>
@@ -96,26 +110,9 @@ function HomeScreen({ navigation }) {
             </View>
             <View style={styles.container}>
                 <FlatList
-                    data={dataset}
+                    data={filterData}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => (
-                        <AppCard
-                            handleFavorite={() => handleFavorite(item)}
-                            isFavorite={item.favorite}
-                            title={item.title}
-                            subtitle={item.subtitle}
-                            onPress={() =>
-                                navigation.navigate(routes.PRODUCT_DETAIL_SCREEN, { item })
-                            }
-                            image={item.image}
-                            renderRightActions={() => (
-                                <ListItemReport
-                                    icon="report"
-                                    onPress={() => handleDelete(item)}
-                                />
-                            )}
-                        />
-                    )}
+                    renderItem={renderItem}
                     refreshing={refreshing}
                     onRefresh={() => console.log("refresh")}
                 />

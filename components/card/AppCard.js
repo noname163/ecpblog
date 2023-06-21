@@ -10,7 +10,7 @@ function AppCard({ title, subtitle, image, isFavorite, handleFavorite, onPress, 
     return (
         <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
             <View style={styles.card}>
-                <Image style={styles.image} source={image} />
+                <Image style={styles.image} source={{uri:image}} />
                 <Swipeable renderRightActions={renderRightActions}>
                     <View style={styles.detailsContainer}>
                         <View style={styles.textContainer}>
