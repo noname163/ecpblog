@@ -3,24 +3,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../ui/HomeScreen';
 import CardDetailScreen from '../ui/CardDetailScreen';
 import AccountNavigator from './AccountNavigator';
-import FavoriteNavigator from './FavoriteNavigator';
+import FavoriteScreen from '../ui/FavoriteScreen';
 
 const Stack = createNativeStackNavigator();
 
-const FeedNavigator = () => (
+const FavoriteNavigator = () => (
     <Stack.Navigator screenOptions={{
         presentation: "containedModal"
     }} >
-        <Stack.Screen name='Account' component={AccountNavigator} options={{
+        <Stack.Screen name='Favorite' component={FavoriteScreen} options={{
             headerShown: false
         }} />
-        <Stack.Screen name='Product Detail'
-            options={{ 
-                headerShown: true
-             }}
-        
-            component={CardDetailScreen} />
+        <Stack.Screen name= "Favorite Detail" component={CardDetailScreen} />
     </Stack.Navigator>
 )
 
-export default FeedNavigator;
+export default FavoriteNavigator;

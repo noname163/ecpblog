@@ -18,7 +18,7 @@ function AppCard({ title, subtitle, image, isFavorite, handleFavorite, onPress, 
                             <AppText style={styles.subtitle}>{subtitle}</AppText>
                         </View>
                         <Pressable onPress={handleFavorite} style={styles.heartIcon}>
-                            <Favorite isFavorite={isFavorite} />
+                            <Favorite isFavorite={isFavorite} size={24} />
                         </Pressable>
                     </View>
                 </Swipeable>

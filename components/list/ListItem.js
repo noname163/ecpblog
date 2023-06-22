@@ -1,18 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, Image, TouchableHighlight, Pressable } from 'react-native';
 import colors from '../../config/colors';
 import { Swipeable } from 'react-native-gesture-handler';
 import AppText from '../text/AppText';
+import Favorite from '../icons/Favorite';
 
-function ListItem({ image, title, subtitle, onPress, renderRightActions }) {
+function ListItem({ image, title, subtitle, handleFavorite, isFavorite, onPress, renderRightActions }) {
     return (
         <TouchableHighlight onPress={onPress} underlayColor={colors.while}>
             <Swipeable renderRightActions={renderRightActions}>
                 <View style={styles.container}>
-                    <Image style={styles.image} source={{uri:image}} />
-                    <View style={styles.textContainer}>
-                        <AppText style={styles.title}>{title}</AppText>
-                        <AppText style={styles.subtitle}>{subtitle}</AppText>
+                    <Image style={styles.image} source={{ uri: image }} />
+                    <View style={styles.detailsContainer}>
+                        <View style={styles.textContainer}>
+                            <AppText style={styles.title}>{title}</AppText>
+                            <AppText style={styles.subtitle}>{subtitle}</AppText>
+                        </View>
+                        <Pressable onPress={handleFavorite} style={styles.heartIcon}>
+                            <Favorite isFavorite={isFavorite} size={24} />
+                        </Pressable>
                     </View>
                 </View>
             </Swipeable>
@@ -23,22 +29,34 @@ function ListItem({ image, title, subtitle, onPress, renderRightActions }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        width:"100%"
+        width: "100%",
+        justifyContent:"center",
     },
     image: {
         width: 70,
         height: 70,
         borderRadius: 35,
-        marginRight: 10
+        marginRight: 10,
+        marginTop:10
+    },
+    detailsContainer: {
+        padding: 20,
+        flexDirection: "row"
     },
     title: {
-        fontWeight: "500"
+        marginBottom: 5,
     },
     subtitle: {
-        color: colors.medium
+        color: colors.secondary,
+        fontWeight: 'bold',
     },
     textContainer: {
-        paddingTop: 15
-    }
+        justifyContent:"center",
+        marginRight:25
+    },
+    heartIcon: {
+        marginLeft: "auto",
+        marginVertical: 15
+    },
 })
 export default ListItem;

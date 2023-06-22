@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AppScreen from '../components/AppScreen';
+import { Ionicons } from '@expo/vector-icons';
 import routes from '../navigation/routes';
 import AppCard from './../components/card/AppCard';
 import ListItemReport from './../components/list/ListItemReport';
 import AppAsyncStore from '../assets/data/AppAsyncStore';
+import EmptyList from '../components/list/EmptyList';
 
 function HomeScreen({ navigation }) {
     const [filterData, setFilterData] = useState([]);
     const [categories, setCategories] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [selectedCategory, setSelectedCategory] = useState('all');
+
 
     useEffect(() => {
         retrieveData();
@@ -18,22 +21,34 @@ function HomeScreen({ navigation }) {
     }, []);
 
     useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            retrieveData();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+    
+    useEffect(() => {
+        retrieveData();
+        setRefreshing(false);
+    }, [refreshing]);
+
+    useEffect(() => {
         handleCategoryPress(selectedCategory);
     }, [selectedCategory]);
 
-    const storeData = async() => {
+    const storeData = async () => {
         try {
             await AppAsyncStore.storeData();
-        } catch (error) {
-            
-        }
-    }
+        } catch (error) { }
+    };
+
     const retrieveData = async () => {
         try {
             const { itemDataset, categories } = await AppAsyncStore.retrieveData();
             setFilterData(itemDataset);
             setCategories(categories);
-            console.log("Item dataset:", itemDataset);
+            console.log('Item dataset:', itemDataset);
         } catch (error) {
             console.log('Error retrieving data:', error);
         }
@@ -54,10 +69,10 @@ function HomeScreen({ navigation }) {
 
     const handleCategoryPress = async (itemValue) => {
         setSelectedCategory(itemValue);
-        console.log("Category selected:", itemValue);
+        console.log('Category selected:', itemValue);
         const { itemDataset } = await AppAsyncStore.retrieveData();
         const filteredData =
-            itemValue === "all"
+            itemValue === 'all'
                 ? itemDataset
                 : itemDataset.filter((item) => item.subtitle === itemValue);
 
@@ -97,6 +112,8 @@ function HomeScreen({ navigation }) {
         />
     );
 
+
+
     return (
         <AppScreen>
             <View style={styles.categoriesContainer}>
@@ -109,28 +126,44 @@ function HomeScreen({ navigation }) {
                 />
             </View>
             <View style={styles.container}>
-                <FlatList
-                    data={filterData}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={renderItem}
-                    refreshing={refreshing}
-                    onRefresh={() => console.log("refresh")}
-                />
+                {filterData.length > 0 ? (
+                    <FlatList
+                        data={filterData}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={renderItem}
+                        refreshing={refreshing}
+                        onRefresh={() => setRefreshing(true)}
+                    />
+                ) : (
+                    <EmptyList />
+                )}
             </View>
         </AppScreen>
     );
 }
 
 const styles = StyleSheet.create({
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingBottom: 10,
+    },
+    headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
+    },
     categoriesContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 10,
-        paddingHorizontal: 15,
+        paddingHorizontal: 20,
     },
     categoryItem: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
         borderRadius: 20,
         marginRight: 10,
         backgroundColor: '#f2f2f2',
@@ -147,9 +180,8 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 15,
-        width: "100%"
-    },
+        width: "90%"
+    }
 });
 
 export default HomeScreen;

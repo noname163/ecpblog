@@ -1,12 +1,12 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
+import FavoriteScreen from '../ui/FavoriteScreen';
 import CreateProductScreen from './../ui/CreateProductScreen';
 import FeedNavigator from './FeedNavigator';
 import NewListingButton from './NewListingButton';
-import ShoppingCartNavigator from './ShoppingCartNavigator';
 import routes from './routes';
-import FavoriteScreen from '../ui/FavoriteScreen';
+import FavoriteNavigator from './FavoriteNavigator';
 
 const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
@@ -30,8 +30,9 @@ const AppNavigator = () => (
     />
     <Tab.Screen
       name="Favorities"
-      component={FavoriteScreen}
+      component={FavoriteNavigator}
       options={{
+        headerShown:false,
         tabBarIcon: () => (
           <MaterialCommunityIcons name="heart" size={33} color="black" />
         ),
