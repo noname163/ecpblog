@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         justifyContent:"center",
+        width:200,
         marginRight:25
     },
     heartIcon: {

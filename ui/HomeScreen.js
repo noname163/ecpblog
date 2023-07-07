@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AppScreen from '../components/AppScreen';
 import { Ionicons } from '@expo/vector-icons';
 import routes from '../navigation/routes';
@@ -10,6 +10,7 @@ import EmptyList from '../components/list/EmptyList';
 
 function HomeScreen({ navigation }) {
     const [filterData, setFilterData] = useState([]);
+    const [topOfTheWeek, setTopOfTheWeek] = useState([]);
     const [categories, setCategories] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -21,13 +22,13 @@ function HomeScreen({ navigation }) {
     }, []);
 
     useEffect(() => {
+        console.log(selectedCategory)
         const unsubscribe = navigation.addListener('focus', () => {
-            retrieveData();
+            handleCategoryPress(selectedCategory)
         });
-
         return unsubscribe;
     }, [navigation]);
-    
+
     useEffect(() => {
         retrieveData();
         setRefreshing(false);
@@ -45,10 +46,12 @@ function HomeScreen({ navigation }) {
 
     const retrieveData = async () => {
         try {
-            const { itemDataset, categories } = await AppAsyncStore.retrieveData();
-            setFilterData(itemDataset);
+            const { data1, itemDataset, categories } = await AppAsyncStore.retrieveData();
+            setFilterData(data1);
+            setTopOfTheWeek(data1.filter((item) => item.isTopOfTheWeek == true))
+            console.log("Top Of the week ", topOfTheWeek)
+            console.log("Data  ", filterData)
             setCategories(categories);
-            console.log('Item dataset:', itemDataset);
         } catch (error) {
             console.log('Error retrieving data:', error);
         }
@@ -69,12 +72,11 @@ function HomeScreen({ navigation }) {
 
     const handleCategoryPress = async (itemValue) => {
         setSelectedCategory(itemValue);
-        console.log('Category selected:', itemValue);
-        const { itemDataset } = await AppAsyncStore.retrieveData();
+        const { itemDataset, data1 } = await AppAsyncStore.retrieveData();
         const filteredData =
             itemValue === 'all'
-                ? itemDataset
-                : itemDataset.filter((item) => item.subtitle === itemValue);
+                ? data1
+                : data1.filter((item) => item.subtitle === itemValue);
 
         setFilterData(filteredData);
     };
@@ -104,6 +106,7 @@ function HomeScreen({ navigation }) {
             isFavorite={item.favorite}
             title={item.title}
             subtitle={item.subtitle}
+            price={item.price}
             onPress={() => navigation.navigate(routes.PRODUCT_DETAIL_SCREEN, { item })}
             image={item.image}
             renderRightActions={() => (
@@ -111,6 +114,14 @@ function HomeScreen({ navigation }) {
             )}
         />
     );
+    const renderTopItem = ({ item }) => (
+        <View style={styles.topItemContainer}>
+            <Image style={styles.topItemImage} source={{ uri: item.image }} />
+            <Text style={styles.topItemTitle}>{item.title}</Text>
+        </View>
+    );
+
+
 
 
 
@@ -125,6 +136,19 @@ function HomeScreen({ navigation }) {
                     renderItem={renderCategoryItem}
                 />
             </View>
+            <View style={styles.topItemContainerView}>
+                <View style={styles.topItemBadge}>
+                    <Text style={styles.topItemBadgeText}>Top of the Week</Text>
+                </View>
+                <FlatList
+                    data={topOfTheWeek}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={renderTopItem}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                />
+            </View>
+
             <View style={styles.container}>
                 {filterData.length > 0 ? (
                     <FlatList
@@ -181,7 +205,45 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "90%"
-    }
+    },
+    topItemContainerView: {
+        alignItems: 'center',
+        width: '100%',
+        height: '25%',
+        marginBottom:5
+    },
+    topItemContainer: {
+        marginRight: 10,
+        alignItems: 'center',
+    },
+    topItemImage: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        marginBottom: 4,
+    },
+    topItemTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 4,
+    },
+    topItemPrice: {
+        fontSize: 14,
+        color: '#888',
+    },
+    topItemBadge: {
+        backgroundColor: 'gold',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 20,
+        marginBottom: 4,
+    },
+    topItemBadgeText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#333',
+    },
 });
 
 export default HomeScreen;

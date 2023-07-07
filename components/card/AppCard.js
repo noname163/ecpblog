@@ -6,16 +6,16 @@ import { AntDesign } from '@expo/vector-icons';
 import AppText from '../text/AppText';
 import Favorite from '../icons/Favorite';
 
-function AppCard({ title, subtitle, image, isFavorite, handleFavorite, onPress, renderRightActions }) {
+function AppCard({ title, subtitle, price,image, isFavorite, handleFavorite, onPress, renderRightActions }) {
     return (
-        <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
+        <Pressable onPress={onPress}>
             <View style={styles.card}>
                 <Image style={styles.image} source={{uri:image}} />
                 <Swipeable renderRightActions={renderRightActions}>
                     <View style={styles.detailsContainer}>
                         <View style={styles.textContainer}>
-                            <AppText style={styles.title}>{title}</AppText>
-                            <AppText style={styles.subtitle}>{subtitle}</AppText>
+                            <AppText style={styles.title}>{title} - {subtitle}</AppText>
+                            <AppText style={styles.subtitle}>{price} $</AppText>
                         </View>
                         <Pressable onPress={handleFavorite} style={styles.heartIcon}>
                             <Favorite isFavorite={isFavorite} size={24} />
@@ -23,7 +23,7 @@ function AppCard({ title, subtitle, image, isFavorite, handleFavorite, onPress, 
                     </View>
                 </Swipeable>
             </View>
-        </TouchableHighlight>
+        </Pressable>
     );
 }
 
@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     },
     title: {
         marginBottom: 5,
+        fontSize:18,
+        fontWeight: "bold"
     },
     subtitle: {
         color: colors.secondary,

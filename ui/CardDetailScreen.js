@@ -1,31 +1,35 @@
-import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import AppScreen from '../components/AppScreen';
 import colors from '../config/colors';
 
-import AppText from '../components/text/AppText';
-import ListItem from './../components/list/ListItem';
 import Favorite from '../components/icons/Favorite';
+import AppText from '../components/text/AppText';
+import AppAsyncStore from '../assets/data/AppAsyncStore';
 
 function CardDetailScreen({ route }) {
-  const data = route.params.item;
+  const[data,setData] = useState(route.params.item);
+
+  const handleFavorite = async (data) => {
+    const newData = {...data, favorite:!data.favorite}
+    setData(newData);
+    await AppAsyncStore.updateDataItem(newData);
+  };
   return (
     <AppScreen>
       <View style={styles.container}>
         <Image style={styles.image} source={{ uri: data.image }} />
         <View style={styles.detailsContainer}>
           <View style={styles.headerContainer}>
-            <AppText style={styles.title}>{data.title}</AppText>
-            <Favorite isFavorite={data.favorite} size={30} />
+            <AppText style={styles.title}>{data.title} - {data.subtitle}</AppText>
+            <Pressable onPress={() => handleFavorite(data)}>
+              <Favorite isFavorite={data.favorite} size={30} />
+            </Pressable>
           </View>
-          <AppText style={styles.price}>{data.subtitle}</AppText>
+          <AppText style={styles.price}>Price: {data.price} $</AppText>
+          <AppText style={{ fontWeight: "bold" }}>Description</AppText>
           <AppText>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-            type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-            Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
-            Ipsum.
+            {data.description}
           </AppText>
         </View>
       </View>
@@ -40,9 +44,9 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    borderColor:colors.while,
-    borderWidth:5,
-    aspectRatio: 5/3
+    borderColor: colors.while,
+    borderWidth: 5,
+    aspectRatio: 5 / 3
   },
   detailsContainer: {
     flex: 1,
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 24,
-    fontWeight: '500',
+    fontWeight: 'bold',
     marginRight: 10,
   },
   price: {

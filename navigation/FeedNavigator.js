@@ -16,7 +16,7 @@ const FeedNavigator = () => (
         }} />
         <Stack.Screen name='Product Detail'
             options={{ 
-                headerShown: true
+                headerShown: true,
              }}
         
             component={CardDetailScreen} />
